@@ -4,6 +4,7 @@ services:
   dind:
     image: docker:dind
     container_name: dind
+    hostname: docker # explicitly specify the hostname
     privileged: true
     user: root
     environment:
@@ -13,7 +14,9 @@ services:
       - docker-certs-client:/certs/client
       - jenkins-data:/var/jenkins_home
     networks:
-      - jenkins
+      jenkins:
+        aliases: 
+          - docker # specify the network alias
 
   jenkins:
     image: jenkins/jenkins:lts-jdk11
@@ -33,6 +36,8 @@ services:
     networks:
       - jenkins
     restart: unless-stopped
+    dns:
+      - 8.8.8.8
 
 networks:
   jenkins:
