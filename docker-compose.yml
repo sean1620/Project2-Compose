@@ -4,7 +4,7 @@ services:
   dind:
     image: docker:dind
     container_name: dind
-    hostname: docker # explicitly specify the hostname
+    hostname: docker # This sets the hostname inside the container to "docker"
     privileged: true
     user: root
     environment:
@@ -15,8 +15,8 @@ services:
       - jenkins-data:/var/jenkins_home
     networks:
       jenkins:
-        aliases: 
-          - docker # specify the network alias
+        aliases:
+          - docker # This creates a network alias for the dind service 
 
   jenkins:
     image: jenkins/jenkins:lts-jdk11
